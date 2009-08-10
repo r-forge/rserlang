@@ -40,13 +40,26 @@ while (!feof($handle)) {
 }
 fclose($handle);
 echo $contents; } ?>
-
 <!-- end of project description -->
 
-<p> What is RErlang? </p>
-<!--
-<p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
--->
+<h2>Welcome to rErlang project!</h2>
+<p>This project provide a library which is a bi-directional interface allowing calling R functions from Erlang code and accessing Erlang functions from R sessions.
+<p> The package is now publicly accessible from the SVN repository. </p>
+<h2>What is rErlang?</h2>
+<p>Erlang/OTP is programming language and runtime environment which supports concurrency, scalability, and fault-tolerant.Erlang/OTP have many modern distributed computing features but are let down by that weakness numerical computation and mathematical libraries. RErlang project improve this weakness by using R facilities.</p>
+To communicate with R, Erlang ports (Ports) and OTP standard behaviors are used in Erlang side.
+Ports provide a byte-oriented interface to an external program.
+And also we want to ensure that rErlang is robust in the event that the external problems or does not respond in a timely manner. The use of standard OTP enables us to do so with minimal effort.
+
+<h2>What's new?</h2>
+<table>
+<tr valign=top><td><b>2009/08/05</b></td><td>Project is registered</td></tr>
+</table>
+
+<h2>Features of rErlang</h2>
+<p>Coming Soon !</p>
+<p>This project is just getting started. <a href="http://r-forge.r-project.org/project/request.php?group_id=499">Please join us!</a></p>
+
 
 </body>
 </html>
