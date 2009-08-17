@@ -6,7 +6,7 @@ start() ->
     spawn(fun() ->
 		  register(example1,self()),
 		  process_flag(trap_exit, true),
-		  Port = open_port({spawn, "./rengine"},[{packet,2}]),
+		  Port = open_port({spawn, "./ERI"},[{packet,2}]),
 		  loop(Port)
 	  end).
 stop() ->
