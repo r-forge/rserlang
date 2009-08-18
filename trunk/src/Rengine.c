@@ -1,28 +1,22 @@
 #include "eri.h"
+#include "Rinit.h"
 
-int r_eval(int x){
+/*
+ * Rargv is the fake argument list we use to initialize R.
+ */
+static char *Rargv[] = {"Rtcl", "--no-save", "--no-restore","--quiet", NULL};
+#define N_R_ARGS ((sizeof(Rargv)/sizeof(char *)) - 1)
 
-  SEXP es, exps, R_GlobalEnv;
-  int er=0;
-  structRstart rp;
-  Rstart Rp = &rp;
 
-  if (!getenv("R_HOME")) {
-    fprintf(stderr, "R_HOME is not set. Please set all required environment variables before running this program.\n");
-    return 4*x;
-  }else{
-    fprintf(stderr,"%s.%s\n",R_MAJOR, R_MINOR);
-    R_DefParams(Rp);
-    Rp->NoRenviron = 0;
-    R_SetParams(Rp);
+int r_setup(){
 
-    setup_Rmainloop();    
-    return 5*x;
-  }
+  int initRes;
+  initRes=initR(N_R_ARGS, Rargv);
+  
+  return initRes;
+}
 
-  //run_Rmainloop();
-  //SEXP a = allocVector("1+1", 1);
-  //es=R_tryEval(exps, R_GlobalEnv, &er);
-
+int r_eval(int x){  
   return 4*x;
+
 }

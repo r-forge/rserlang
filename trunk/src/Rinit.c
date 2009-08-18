@@ -18,9 +18,9 @@
 #include <Rinterface.h>
 /* unfortunately 2.3.0 doesn't export R_CStackLimit */
 #ifndef RIF_HAS_CSTACK
-//#if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
+#if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
 //typedef unsigned long uintptr_t;
-//#endif
+#endif
 extern uintptr_t R_CStackLimit; /* C stack limit */
 extern uintptr_t R_CStackStart; /* Initial stack address */
 #endif
@@ -68,6 +68,7 @@ extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 
 
 int initR(int argc, char **argv) {
+	
     structRstart rp;
     Rstart Rp = &rp;
     /* getenv("R_HOME","/Library/Frameworks/R.framework/Resources",1); */
@@ -84,14 +85,13 @@ int initR(int argc, char **argv) {
 #ifdef RIF_HAS_RSIGHAND
     R_SignalHandlers=0;
 #endif
-    {
+    {     
       int stat=Rf_initialize_R(argc, argv);
       if (stat<0) {
-        printf("Failed to initialize embedded R! (stat=%d)\n",stat);
-        return -1;
+	printf("Failed to initialize embedded R! (stat=%d)\n",stat);
+	return -1;
       }
     }
-
 #ifdef RIF_HAS_RSIGHAND
     R_SignalHandlers=0;
 #endif
