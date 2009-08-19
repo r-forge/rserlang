@@ -1,8 +1,11 @@
+#include <stdio.h>
+
 #include "Rcallbacks.h"
 
 int Re_ReadConsole(RCCONST char *prompt, unsigned char *buf, int len, int addtohistory){
-  fprintf(stderr,"Re_ReadConsole\n");
-  return -1;
+  fputs(prompt,stdout);
+  fflush(stdout);
+  if(fgets(buf,len,stdin)) return 1; else return 0;
 }
 
 void Re_ShowMessage(RCCONST char *buf){
@@ -10,7 +13,8 @@ void Re_ShowMessage(RCCONST char *buf){
 }
 
 void Re_WriteConsoleEx(RCCONST char *buf, int len, int oType){
-  fprintf(stderr,"Re_WriteConsoleEx\n");
+  printf("%s",buf);
+  //  fprintf(stderr,"Re_WriteConsoleEx\n");
 }
 
 
@@ -29,7 +33,7 @@ void Re_ClearerrConsole(){
   fprintf(stderr,"Re_ClearerrConsole\n");
 }
 void Re_Busy(int which){
-  fprintf(stderr,"Re_Busy%s.%s\n",R_MAJOR, R_MINOR);
+  printf("Re_Busy\n");
 }
 
 int Re_ShowFiles(int nfile, 		/* number of files */
