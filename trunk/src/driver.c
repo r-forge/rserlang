@@ -1,10 +1,26 @@
 #include <stdio.h>
+
+#include "Rinit.h"
+
 typedef unsigned char byte;
 
 int read_cmd(byte *buf);
 int write_cmd(byte *buff, int len);
 
-int main(){
+void debugloop(){
+  printf("start debug mode\n");
+
+  if(r_setup()){
+    printf("fail initR\n");
+    return; 
+  }  
+  printf("R initialized\n");
+
+
+  printf("finish debug mode\n");
+}
+
+void mainloop(){
   int fn, args1, args2, result;
   byte buff[100];
 
@@ -21,5 +37,15 @@ int main(){
     }
     buff[0] = result;
     write_cmd(buff, 1);
-  }
+  }  
+}
+
+int main(int argc, char **argv ){
+
+  if (argc==2 && !strcmp(argv[1],"debug")){
+    debugloop();
+  }else{
+    mainloop();
+  }  
+  return 0;
 }
