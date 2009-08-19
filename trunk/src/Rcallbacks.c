@@ -9,23 +9,22 @@ int Re_ReadConsole(RCCONST char *prompt, unsigned char *buf, int len, int addtoh
 }
 
 void Re_ShowMessage(RCCONST char *buf){
-  fprintf(stderr,"Re_ShowMessage\n");
+  printf("Re_ShowMessage\n");
 }
 
 void Re_WriteConsoleEx(RCCONST char *buf, int len, int oType){
   printf("%s",buf);
-  //  fprintf(stderr,"Re_WriteConsoleEx\n");
 }
 
 
 /* Indicate that input is coming from the console */
 void Re_ResetConsole(){
-  fprintf(stderr,"Re_ResetConsole\n");
+  printf("Re_ResetConsole\n");
 }
 
 /* Stdio support to ensure the console file buffer is flushed */
 void Re_FlushConsole(){
-  fprintf(stderr,"Re_FlushConsole\n");
+  printf("Re_FlushConsole\n");
 }
 
 /* Reset stdin if the user types EOF on the console. */
@@ -33,7 +32,7 @@ void Re_ClearerrConsole(){
   fprintf(stderr,"Re_ClearerrConsole\n");
 }
 void Re_Busy(int which){
-  printf("Re_Busy\n");
+  printf("rBusy(%d)\n",which);
 }
 
 int Re_ShowFiles(int nfile, 		/* number of files */
@@ -42,18 +41,18 @@ int Re_ShowFiles(int nfile, 		/* number of files */
                  RCCONST char *wtitle,  /* title for window = `title' arg of file.show */
                  Rboolean del,	        /* should files be deleted after use? */
                  RCCONST char *pager)	/* pager to be used */{
-  fprintf(stderr,"Re_ShowFiles\n");
+  printf("Re_ShowFiles\n");
   return 1;
 }
 
 int Re_ChooseFile(int new, char *buf, int len){
-  fprintf(stderr,"Re_ChooseFile\n");
+  printf("Re_ChooseFile\n");
 }
 
 void Re_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env){
-  fprintf(stderr,"Re_loadhistory\n");
+  printf("Re_loadhistory\n");
 }
 
 void Re_savehistory(SEXP call, SEXP op, SEXP args, SEXP env){
-  fprintf(stderr,"Re_savehistory\n");
+  printf("Re_savehistory\n");
 }
