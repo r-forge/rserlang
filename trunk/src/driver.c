@@ -15,6 +15,9 @@ void debugloop(){
     return; 
   }  
   printf("R initialized\n");
+  
+
+  printf("start main loop\n");
   r_run();
 
   printf("finish debug mode\n");
