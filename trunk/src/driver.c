@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "eri.h"
 #include "Rinit.h"
 
 typedef unsigned char byte;
@@ -18,8 +19,14 @@ void debugloop(){
 
   char *s;
   s = "1+1";
+  int er=0;
+  SEXP es,pstr;
 
-  r_parse(s);
+  pstr = r_parse(s);
+
+  es = r_eval(pstr,&er);
+
+  PrintValue(es);
 
 
   printf("start main loop\n");

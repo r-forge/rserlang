@@ -22,43 +22,41 @@ void r_run(){
   run_Rmainloop();
 }
 
-int r_parse(const char *s){
+long r_parse(const char *s){
 
   ParseStatus ps;
-  SEXP pstr, cv, es;
+  SEXP pstr, cv;
   int er=0,i=0,l;
 
-  PROTECT(cv=allocVector(STRSXP,5));
+  PROTECT(cv=allocVector(STRSXP,1));
   SET_STRING_ELT(cv, 0, mkChar(s));
   UNPROTECT(1);
   printf("parsing \"%s\"\n", CHAR(STRING_ELT(cv,0)));    
   pstr=R_ParseVector(cv, 1, &ps, R_NilValue);  
+
   printf("%d\n",TYPEOF(pstr));  
   printf("parse status=%d, result=%x, type=%d\n", ps, (int) pstr, (pstr!=0)?TYPEOF(pstr):0);
+  
+  return SEXP2L(pstr); 
 
-  if (TYPEOF(pstr)==EXPRSXP) { /* if the object is a list of exps, eval them one by one */
-    l=LENGTH(pstr);
+}
+
+long r_eval(long exp, int *er){  
+
+  SEXP es, exps=L2SEXP(exp);
+  int i=0, l; 
+
+  
+  if (TYPEOF(exps)==EXPRSXP) { /* if the object is a list of exps, eval them one by one */
+    l=LENGTH(exps);
     while (i<l) {
-      es=R_tryEval(VECTOR_ELT(pstr,i), R_GlobalEnv, &er);
+      es=R_tryEval(VECTOR_ELT(exps,i), R_GlobalEnv, er);
       i++;
     }
   } else
-    es=R_tryEval(pstr, R_GlobalEnv, &er);
+    es=R_tryEval(exps, R_GlobalEnv, er); 
 
-  printf("%d\n",er);
-  printf("%d\n",TYPEOF(es));
-  PrintValue(es);
-
-  return 0;
-}
-
-int r_eval(int x){  
-
-  SEXP es, exps;
-  int er=0; 
-  //es = R_tryEval(exps, R_GlobalEnv, &er);
-
-  return 4*x;
+  return SEXP2L(es);
 
 }
 
