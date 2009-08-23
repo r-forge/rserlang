@@ -15,7 +15,12 @@ void debugloop(){
     return; 
   }  
   printf("R initialized\n");
-  
+
+  char *s;
+  s = "1+1";
+
+  r_parse(s);
+
 
   printf("start main loop\n");
   r_run();
