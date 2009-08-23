@@ -20,13 +20,13 @@ void debugloop(){
   char *s;
   s = "1+1";
   int er=0;
-  SEXP es,pstr;
+  long es,pstr;
 
   pstr = r_parse(s);
 
   es = r_eval(pstr,&er);
 
-  PrintValue(es);
+  PrintValue(L2SEXP(es));
 
 
   printf("start main loop\n");
