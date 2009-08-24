@@ -44,8 +44,8 @@ echo $contents; } ?>
 <!-- end of project description -->
 <h2>What is rErlang?</h2>
 <p>Erlang/OTP is programming language and runtime environment which supports concurrency, scalability, and fault-tolerant.Erlang/OTP have many modern distributed computing features but are let down by that weakness numerical computation and mathematical libraries. rErlang project improve this weakness by using R facilities.</p>
-To communicate with R, Erlang ports (Ports) and OTP standard behaviors are used in Erlang side.
-Ports provide a byte-oriented interface to an external program.
+To communicate with R, Erlang ports (Ports), ei (Erlang Interface) library and OTP standard behaviors are used in Erlang side.
+Ports provides a byte-oriented interface to an external program. ei helps conversion of data between C and Erlang formats.
 And also we want to ensure that rErlang is robust in the event that the external problems or does not respond in a timely manner. The use of standard OTP enables us to do so with minimal effort.
 <h2>What's new?</h2>
 <table>
