@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "erl_interface.h"
+#include "ei.h"
 #include "eri.h"
 #include "Rinit.h"
 
