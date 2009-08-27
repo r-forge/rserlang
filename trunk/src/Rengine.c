@@ -26,7 +26,6 @@ long r_parse(const char *s){
 
   ParseStatus ps;
   SEXP pstr, cv;
-  int er=0,i=0,l;
 
   PROTECT(cv=allocVector(STRSXP,1));
   SET_STRING_ELT(cv, 0, mkChar(s));
