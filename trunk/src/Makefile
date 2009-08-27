@@ -3,6 +3,8 @@
 .erl.beam:
 	erlc -W $<
 
+CSRC=$(shell ls *.c)
+HED=$(shell ls *.h)
 CC := gcc
 RM := rm
 MODS = eri
@@ -15,8 +17,8 @@ LFLAGS := -L${R_LIB} -L${ERL_LIB}/lib -lR -lerl_interface -lei
 
 all:	${MODS:%=%.beam} eri
 
-eri:		eri.h eri.c Rcallbacks.h Rcallbacks.c Rinit.h Rinit.c Rengine.c erl_comm.c driver.c 
-		${CC} ${CFLAGS} ${LFLAGS} -o ${PRODUCT} eri.h eri.c Rcallbacks.h Rcallbacks.c Rinit.c Rinit.h  Rengine.c erl_comm.c driver.c 
+eri:		${HED} ${CSRC}
+		${CC} ${CFLAGS} ${LFLAGS} -o ${PRODUCT} ${HED} ${CSRC}
 
 clean: 		
 		${RM} -rf ${PRODUCT} *.beam *~
