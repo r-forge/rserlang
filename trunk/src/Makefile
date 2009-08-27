@@ -16,7 +16,7 @@ LFLAGS := -L${R_LIB} -L${ERL_LIB}/lib -lR -lerl_interface -lei
 all:	${MODS:%=%.beam} eri
 
 eri:		eri.h eri.c Rcallbacks.h Rcallbacks.c Rinit.h Rinit.c Rengine.c erl_comm.c driver.c 
-		${CC} ${CFLAGS} ${LFLAGS} -o ERI eri.h eri.c Rcallbacks.h Rcallbacks.c Rinit.c Rinit.h  Rengine.c erl_comm.c driver.c 
+		${CC} ${CFLAGS} ${LFLAGS} -o ${PRODUCT} eri.h eri.c Rcallbacks.h Rcallbacks.c Rinit.c Rinit.h  Rengine.c erl_comm.c driver.c 
 
 clean: 		
-		${RM} -rf ERI *.beam *~
+		${RM} -rf ${PRODUCT} *.beam *~
