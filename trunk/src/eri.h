@@ -9,3 +9,8 @@
 /* the viewpoint is from R, i.e. "get" means "Erlang->R" whereas "put" means "R->Erlang" */
 
 SEXP eri_getString();
+
+int r_setup();
+long r_parse(const char *s);
+long r_eval(long exp, int *er);
+void r_run();

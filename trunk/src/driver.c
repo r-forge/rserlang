@@ -10,10 +10,11 @@ typedef unsigned char byte;
 int read_cmd(byte *buf);
 int write_cmd(byte *buff, int len);
 
+
 void debugloop(){
   printf("start debug mode\n");
 
-  if(r_setup()){
+  if(setup()){
     printf("fail initR\n");
     return; 
   }  
@@ -46,11 +47,11 @@ void mainloop(){
    
     if (fn == 1){
       args1 = buff[1];
-      result = r_eval(args1);
+      // result = r_eval(args1);
     }else if(fn == 2){
       args1 = buff[1];
       args2 = buff[2];   
-      result = r_eval(args1);   
+      // result = r_eval(args1);   
     }
     buff[0] = result;
     write_cmd(buff, 1);

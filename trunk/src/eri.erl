@@ -4,19 +4,19 @@
 
 start() ->
     spawn(fun() ->
-		  register(example1,self()),
+		  register(eri,self()),
 		  process_flag(trap_exit, true),
 		  Port = open_port({spawn, "./ERI"},[{packet,2}]),
 		  loop(Port)
 	  end).
 stop() ->
-    example1 ! stop.
+    eri ! stop.
 
 r_eval(X) -> call_port({r_eval,X}).
 sum(X,Y) -> call_port({sum,X,Y}).
 
 call_port(Msg) ->
-    example1 ! {call, self(),Msg},
+    eri ! {call, self(),Msg},
     receive
 	{example1, Result}->
 	    Result
@@ -28,7 +28,7 @@ loop(Port) ->
 	    Port ! {self(), {command, encode(Msg)}},
 	    receive
 		{Port, {data, Data}} ->
-		    Caller ! {example1, decode(Data)}
+		    Caller ! {eri, decode(Data)}
 	    end,
 	    loop(Port);
 	stop ->
