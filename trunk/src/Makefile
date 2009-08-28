@@ -1,7 +1,9 @@
 .SUFFIXES: .erl .beam .yrl
 
+BINDIR :=../bin
+
 .erl.beam:
-	erlc -W $<
+	erlc -W -o${BINDIR} $<
 
 CSRC=$(shell ls *.c)
 HED=$(shell ls *.h)
@@ -18,7 +20,7 @@ LFLAGS := -L${R_LIB} -L${ERL_LIB}/lib -lR -lerl_interface -lei
 all:	${MODS:%=%.beam} eri
 
 eri:		${HED} ${CSRC}
-		${CC} ${CFLAGS} ${LFLAGS} -o ${PRODUCT} ${HED} ${CSRC}
+		${CC} ${CFLAGS} ${LFLAGS} -o ${BINDIR}/${PRODUCT} ${HED} ${CSRC}
 
 clean: 		
-		${RM} -rf ${PRODUCT} *.beam *~
+		${RM} -rf ${BINDIR}/${PRODUCT} ${BINDIR}/*.beam *~
