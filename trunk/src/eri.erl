@@ -1,22 +1,37 @@
 -module(eri).
--export([start/0, stop/0]).
--export([r_eval/1, sum/2]).
 
-start() ->
-    spawn(fun() ->
-		  register(eri,self()),
-		  process_flag(trap_exit, true),
-		  Port = open_port({spawn, "./ERI"},[{packet,2}]),
-		  loop(Port)
-	  end).
+% API
+-export([start/0, start/1, stop/0,init/1]).
+-export([setup/0,eval/1,r_eval/1, sum/2]).
+
+
+start()->
+    start("./ERI").
+start(ExtPrg) ->
+    spawn_link(?MODULE, init, [ExtPrg]).
+
 stop() ->
-    eri ! stop.
+    ?MODULE ! stop.
 
-r_eval(X) -> call_port({r_eval,X}).
-sum(X,Y) -> call_port({sum,X,Y}).
+setup()->
+    io:format("Calling port with eri_setup()~n").
+    
+eval(X)->
+    io:format("Calling port with eri_parse(~p)~n",X),
+    io:format("Calling port with eri_eval()~n").
+
+init(ExtPrg)->
+    register(?MODULE, self()),
+    process_flag(trap_exit, true),
+    Port = open_port({spawn, ExtPrg}, [{packet,2}]),
+    loop(Port).
+
+r_eval(X) -> call_port({r_eval, X}).
+
+sum(X,Y) -> call_port({sum, X, Y}).
 
 call_port(Msg) ->
-    eri ! {call, self(),Msg},
+    ?MODULE ! {call, self(), Msg},
     receive
 	{example1, Result}->
 	    Result
