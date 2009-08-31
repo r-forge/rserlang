@@ -2,14 +2,19 @@
 
 #include "erl_interface.h"
 #include "ei.h"
-#include "eri.h"
+#include "Rengine.h"
 #include "Rinit.h"
+#include "eri.h"
 
 typedef unsigned char byte;
 
 int read_cmd(byte *buf);
 int write_cmd(byte *buff, int len);
 
+
+int sum(int x, int y){
+  return x+y;
+}
 
 void debugloop(){
   printf("start debug mode\n");
@@ -39,23 +44,48 @@ void debugloop(){
 }
 
 void mainloop(){
-  int fn, args1, args2, result;
-  byte buff[100];
+  
+  ETERM *tuplep, *resp;
+  ETERM *fnp, *argp1,*argp2;
+  int resi;
+  long resl;
+  byte buf[100];
 
-  while (read_cmd(buff) > 0) {
-    fn = buff[0];
+  erl_init(NULL, 0);
+
+  while (read_cmd(buf) > 0) {
+
+    tuplep = erl_decode(buf);
+    fnp = erl_element(1, tuplep);    
+    
+    if (strncmp((char *)ERL_ATOM_PTR(fnp), "sum", 3)==0) {      
+      argp1 = erl_element(2, tuplep);
+      argp2 = erl_element(3, tuplep);
+      resi = sum(ERL_INT_VALUE(argp1),ERL_INT_VALUE(argp2));
+      resp = erl_mk_int(resi);
+    }else if(strncmp((char *)ERL_ATOM_PTR(fnp), "setup", 4)==0){      
+      resi = setup();
+      resp = erl_mk_int(resi);
+    }else if(strncmp((char *)ERL_ATOM_PTR(fnp), "parse", 4)==0){
+      argp1 = erl_element(2, tuplep);
+      resl = parse("1+1");
+      //resp = erl_mk_int(resl);
+      //fprintf(stderr,"%d\n",resl);
+    }else if(strncmp((char *)ERL_ATOM_PTR(fnp), "eval", 3)==0){
+      
+    }    
+    
+    erl_encode(resp, buf);
+    write_cmd(buf, erl_term_len(resp));
+
+    erl_free_compound(tuplep);
+    erl_free_term(fnp);
+    erl_free_term(argp1);
+    erl_free_term(argp2);
+    erl_free_term(resp);
    
-    if (fn == 1){
-      args1 = buff[1];
-      // result = r_eval(args1);
-    }else if(fn == 2){
-      args1 = buff[1];
-      args2 = buff[2];   
-      // result = r_eval(args1);   
-    }
-    buff[0] = result;
-    write_cmd(buff, 1);
-  }  
+  }    
+
 }
 
 int main(int argc, char **argv ){

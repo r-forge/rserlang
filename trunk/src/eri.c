@@ -1,10 +1,19 @@
 #include <stdio.h>
 
+#include "Rengine.h"
+
+
 int setup(){  
   int res =  r_setup();
   return res;
 }
 
-long eval(){
+long parse(const char *s){
+  fprintf(stderr,"parse:%s\n",s);    
+  return r_parse(s);
+}
 
+long erl_eval(long exp){
+  int er=0;
+  return r_eval(exp,&er);
 }
