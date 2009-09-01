@@ -14,8 +14,9 @@ stop() ->
     ?MODULE ! stop.
 
 setup() -> 
-    case call_port({setup}) of
-	0->{ok}
+    case call_port({setup}) of 
+	0 -> {ok};
+        _ -> {error}
     end.
 
 parse(X)->
@@ -48,7 +49,7 @@ loop(Port) ->
 	    Port ! {self(), {command, term_to_binary(Msg)}},
 	    receive
 		{Port, {data, Data}} ->
-		    Caller ! {eri, binary_to_term(Data)}
+		    Caller ! {?MODULE, binary_to_term(Data)}
 	    end,
 	    loop(Port);
 	stop ->
