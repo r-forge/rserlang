@@ -1,5 +1,9 @@
 #include <unistd.h>
 
+#include "erl_interface.h"
+#include "ei.h"
+
+
 typedef unsigned char byte; 
 
 int read_cmd(byte *buf);
@@ -14,6 +18,18 @@ int read_cmd(byte *buf){
     return(-1);
   len = (buf[0] << 8) | buf[1];
   return read_exact(buf, len);
+}
+
+int write_cmd2(ei_x_buff *buff)
+{
+  byte li;
+
+  li = (buff->index >> 8) & 0xff; 
+  write_exact(&li, 1);
+  li = buff->index & 0xff;
+  write_exact(&li, 1);
+
+  return write_exact(buff->buff, buff->index);
 }
 
 int write_cmd(byte *buf, int len){

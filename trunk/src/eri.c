@@ -8,8 +8,7 @@ int setup(){
   return res;
 }
 
-long parse(const char *s){
-  fprintf(stderr,"parse:%s\n",s);    
+long parse(const char *s){ 
   return r_parse(s);
 }
 

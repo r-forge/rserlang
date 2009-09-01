@@ -23,8 +23,7 @@ parse(X)->
     call_port({parse,X}).
 
     
-eval(X)->
-    io:format("Calling port with eval()~n"),
+eval(X)->    
     parse(X).
 
 
