@@ -14,10 +14,7 @@ stop() ->
     ?MODULE ! stop.
 
 setup() -> 
-    case call_port({setup}) of 
-	0 -> {ok};
-        _ -> {error}
-    end.
+    call_port({setup}).
 
 parse(X)->
     call_port({parse,X}).

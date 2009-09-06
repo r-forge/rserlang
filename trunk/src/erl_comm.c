@@ -6,10 +6,9 @@
 
 typedef unsigned char byte; 
 
-int read_cmd(byte *buf);
-int write_cmd(byte *buf, int len);
 int read_exact(byte *buf, int len);
 int write_exact(byte *buf, int len);
+
 
 int read_cmd(byte *buf){
   int len;
@@ -20,8 +19,7 @@ int read_cmd(byte *buf){
   return read_exact(buf, len);
 }
 
-int write_cmd2(ei_x_buff *buff)
-{
+int write_cmd(ei_x_buff *buff){
   byte li;
 
   li = (buff->index >> 8) & 0xff; 
@@ -30,18 +28,6 @@ int write_cmd2(ei_x_buff *buff)
   write_exact(&li, 1);
 
   return write_exact(buff->buff, buff->index);
-}
-
-int write_cmd(byte *buf, int len){
-  byte li;
-
-  li = (len >> 8) & 0xff;
-  write_exact(&li, 1);
-
-  li = len & 0xff;
-  write_exact(&li, 1);
-
-  return write_exact(buf, len);
 }
 
 int read_exact(byte *buf, int len){
