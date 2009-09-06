@@ -21,8 +21,10 @@ parse(X)->
 
     
 eval(X)->    
-    parse(X).
-
+    case parse(X) of
+	{ok,Result} -> call_port({eval,Result});
+	_ -> {error}
+    end.
 
 init(ExtPrg)->
     register(?MODULE, self()),

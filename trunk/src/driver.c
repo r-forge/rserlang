@@ -36,6 +36,7 @@ void debugloop(){
 
   es = r_eval(pstr,&er);
 
+  printf("%d\n",L2SEXP(es));
   PrintValue(L2SEXP(es));
 
 
@@ -45,48 +46,61 @@ void debugloop(){
   printf("finish debug mode\n");
 }
 
-void mainloop(){
-  
-  ETERM *tuplep;
-  ETERM *fnp, *argp1,*argp2;
-  byte buf[100];
-  int resi;
-
+int mainloop(){
+    
+  byte* buf;
+  int size = BUF_SIZE;
+  char command[MAXATOMLEN];
+  char exp[MAXATOMLEN];
+  long pstr;
+  int resi,index, version, arity;
+  int x,y;  
   long resl;  
   ei_x_buff result;
 
-  erl_init(NULL, 0);
+
+  if ((buf = (byte *) malloc(size)) == NULL) return -1;
     
   while (read_cmd(buf) > 0) {
-
-    tuplep = erl_decode(buf);
-    fnp = erl_element(1, tuplep);
-        
+    
+    index = 0;
+    if (ei_decode_version(buf, &index, &version)) return 1;
+    if (ei_decode_tuple_header(buf, &index, &arity)) return 2;    
+    if (ei_decode_atom(buf, &index, command)) return 4;
+    
+      
     //
     if(ei_x_new_with_version(&result) || ei_x_encode_tuple_header(&result,2)){
     }
     
-    if (strncmp((char *)ERL_ATOM_PTR(fnp), "sum", 3)==0) {      
-      argp1 = erl_element(2, tuplep);
-      argp2 = erl_element(3, tuplep);
-      resi = sum(ERL_INT_VALUE(argp1),ERL_INT_VALUE(argp2));
+    if (strncmp(command, "sum", 3)==0) {      
+      fprintf(stderr,"%s\n",command);
+      if (ei_decode_long(buf, &index, &x)) return 6;
+      if (ei_decode_long(buf, &index, &y)) return 7;
+
+      resi = sum(x,y);
       if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resi)){
       }
-    }else if(strncmp((char *)ERL_ATOM_PTR(fnp), "setup", 4)==0){      
+    }else if(strncmp(command, "setup", 4)==0){      
       resi = setup();
       if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resi)){
       }           
-    }else if(strncmp((char *)ERL_ATOM_PTR(fnp), "parse", 5)==0){      
-      
-      resl = parse("1+1");
+    }else if(strncmp(command, "parse", 5)==0){
+      if (ei_decode_string(buf, &index, &exp)) return 6;      
+      resl = parse(exp);
       if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resl)){
       }     
-    }else if(strncmp((char *)ERL_ATOM_PTR(fnp), "eval", 3)==0){
-      
+    }else if(strncmp(command, "eval", 3)==0){
+      if (ei_decode_long(buf, &index, &pstr)) return 6;
+      resl = erl_eval(pstr);
+      fprintf(stderr,"result=%d\n",resl);
+      if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resl)){
+      }      
     }
     write_cmd(&result);
     ei_x_free(&result);
-  }    
+  }
+  return 0;
 
 }
 
