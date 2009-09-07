@@ -67,17 +67,13 @@ int mainloop(){
     if (ei_decode_version(buf, &index, &version)) return 1;
     if (ei_decode_tuple_header(buf, &index, &arity)) return 2;    
     if (ei_decode_atom(buf, &index, command)) return 4;
-    
       
-    //
     if(ei_x_new_with_version(&result) || ei_x_encode_tuple_header(&result,2)){
     }
     
-    if (strncmp(command, "sum", 3)==0) {      
-      fprintf(stderr,"%s\n",command);
+    if (strncmp(command, "sum", 3)==0) {            
       if (ei_decode_long(buf, &index, &x)) return 6;
       if (ei_decode_long(buf, &index, &y)) return 7;
-
       resi = sum(x,y);
       if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resi)){
       }
@@ -92,8 +88,7 @@ int mainloop(){
       }     
     }else if(strncmp(command, "eval", 3)==0){
       if (ei_decode_long(buf, &index, &pstr)) return 6;
-      resl = erl_eval(pstr);
-      fprintf(stderr,"result=%d\n",resl);
+      resl = erl_eval(pstr);      
       if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resl)){
       }      
     }
