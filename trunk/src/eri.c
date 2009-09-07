@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "eri.h"
 #include "Rengine.h"
 
 
@@ -13,6 +14,13 @@ long parse(const char *s){
 }
 
 long erl_eval(long exp){
+  long e;
+  SEXP es;
   int er=0;
-  return r_eval(exp,&er);
+  e = r_eval(exp,&er);
+  es = L2SEXP(e);
+  fprintf(stderr,"TYPEOF:%d\n",TYPEOF(es));
+  fprintf(stderr,"LENGTH:%d\n",LENGTH(es));
+  
+  return e;
 }
