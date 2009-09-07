@@ -72,8 +72,8 @@ int mainloop(){
       }
       if (ei_decode_long(buf, &index, &pstr)) return 6;     
       resl = erl_eval(pstr);
-      if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resl) || ei_x_encode_atom(&result,"tmp")){
-      } 
+      convert(resl,&result);      
+      
     }else{
       if(ei_x_new_with_version(&result) || ei_x_encode_tuple_header(&result,2)){
       }
@@ -94,30 +94,7 @@ int mainloop(){
 	}     
       }
     }
-    /*
-    if (strncmp(command, "sum", 3)==0) {            
-      if (ei_decode_long(buf, &index, &x)) return 6;
-      if (ei_decode_long(buf, &index, &y)) return 7;
-      resi = sum(x,y);
-      if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resi)){
-      }
-    }else if(strncmp(command, "setup", 4)==0){      
-      resi = setup();
-      if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resi)){
-      }           
-    }else if(strncmp(command, "parse", 5)==0){
-      if (ei_decode_string(buf, &index, &exp)) return 6;      
-     
-      resl = parse(exp);
-      if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resl)){
-      }     
-    }else if(strncmp(command, "eval", 3)==0){
-      if (ei_decode_long(buf, &index, &pstr)) return 6;     
-      resl = erl_eval(pstr);
-      if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resl)){
-      }      
-    }
-    */
+   
     write_cmd(&result);
     ei_x_free(&result);
   }

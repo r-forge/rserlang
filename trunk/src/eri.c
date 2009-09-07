@@ -14,16 +14,27 @@ long parse(const char *s){
 }
 
 long erl_eval(long exp){
-  long e;
-  SEXP es;
+  long e;  
   int er=0;
+ 
+  e = r_eval(exp,&er);  
+
+  return e;
+}
+
+int convert(long exp, ei_x_buff *result){
+
+  SEXP es;
   double *v;
-  e = r_eval(exp,&er);
-  es = L2SEXP(e);
+
+  es = L2SEXP(exp);
   fprintf(stderr,"TYPEOF:%d\n",TYPEOF(es));
   fprintf(stderr,"LENGTH:%d\n",LENGTH(es));  
   v = REAL(es);
   fprintf(stderr,"REAL:%f\n", *v);
-  
-  return e;
+
+  if(ei_x_encode_atom(result,"ok") || ei_x_encode_long(result,exp) || ei_x_encode_atom(result,"tmp")){
+  } 
+
+  return 0;
 }
