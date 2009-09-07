@@ -35,14 +35,11 @@ void debugloop(){
   pstr = r_parse(s);
 
   es = r_eval(pstr,&er);
-
-  printf("%d\n",L2SEXP(es));
+ 
   PrintValue(L2SEXP(es));
-
 
   printf("start main loop\n");
   r_run();
-
   printf("finish debug mode\n");
 }
 
