@@ -17,10 +17,13 @@ long erl_eval(long exp){
   long e;
   SEXP es;
   int er=0;
+  double *v;
   e = r_eval(exp,&er);
   es = L2SEXP(e);
   fprintf(stderr,"TYPEOF:%d\n",TYPEOF(es));
-  fprintf(stderr,"LENGTH:%d\n",LENGTH(es));
+  fprintf(stderr,"LENGTH:%d\n",LENGTH(es));  
+  v = REAL(es);
+  fprintf(stderr,"REAL:%f\n", *v);
   
   return e;
 }
