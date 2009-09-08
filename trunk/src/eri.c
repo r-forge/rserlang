@@ -34,13 +34,20 @@ int convert(long exp, ei_x_buff *result){
   fprintf(stderr,"LENGTH:%d\n",LENGTH(es));  
 
   if(type == REALSXP){
-    v = REAL(es);
-    fprintf(stderr,"REAL:%f\n", *v);
+    unsigned int len = LENGTH(es);
+    if(len > 0){   
+      v = REAL(es);
+      int i = 0;      
+      while(i < len){
+	fprintf(stderr,"REAL:%f\n", *v+i);      
+	i++;
+      }
+    }    
   }else{
     
   }
 
-  if(ei_x_encode_atom(result,"ok") || ei_x_encode_long(result,exp) || ei_x_encode_atom(result,"tmp")){
+  if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"REALSXP") || ei_x_encode_long(result,exp)){
   } 
 
   return 0;
