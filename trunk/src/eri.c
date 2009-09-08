@@ -25,24 +25,34 @@ long erl_eval(long exp){
 int convert(long exp, ei_x_buff *result){
 
   SEXP es;
-  double *v;
-  int type;
+  int type, i;
+  double *vd;
+  int *vi;  
 
   es = L2SEXP(exp);
   type = TYPEOF(es);
+  unsigned int len = LENGTH(es);
   fprintf(stderr,"TYPEOF:%d\n",type);
-  fprintf(stderr,"LENGTH:%d\n",LENGTH(es));  
+  fprintf(stderr,"LENGTH:%d\n",len);  
 
-  if(type == REALSXP){
-    unsigned int len = LENGTH(es);
+  if(type == REALSXP){    
     if(len > 0){   
-      v = REAL(es);
-      int i = 0;      
+      vd = REAL(es);
+      i = 0;      
       while(i < len){
-	fprintf(stderr,"REAL:%f\n", *v+i);      
+	fprintf(stderr,"REAL:%f\n", *vd+i);
 	i++;
       }
     }    
+  }else if(type == INTSXP){
+    if(len > 0){
+      vi = INTEGER(es);
+      i = 0;      
+      while(i < len){	
+	fprintf(stderr,"INTEGER:%d\n", *vi+i);		
+	i++;
+      }
+    }
   }else{
     
   }
