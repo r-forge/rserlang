@@ -26,12 +26,19 @@ int convert(long exp, ei_x_buff *result){
 
   SEXP es;
   double *v;
+  int type;
 
   es = L2SEXP(exp);
-  fprintf(stderr,"TYPEOF:%d\n",TYPEOF(es));
+  type = TYPEOF(es);
+  fprintf(stderr,"TYPEOF:%d\n",type);
   fprintf(stderr,"LENGTH:%d\n",LENGTH(es));  
-  v = REAL(es);
-  fprintf(stderr,"REAL:%f\n", *v);
+
+  if(type == REALSXP){
+    v = REAL(es);
+    fprintf(stderr,"REAL:%f\n", *v);
+  }else{
+    
+  }
 
   if(ei_x_encode_atom(result,"ok") || ei_x_encode_long(result,exp) || ei_x_encode_atom(result,"tmp")){
   } 
