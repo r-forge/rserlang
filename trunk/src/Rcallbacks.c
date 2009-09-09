@@ -13,7 +13,7 @@ void Re_ShowMessage(RCCONST char *buf){
 }
 
 void Re_WriteConsoleEx(RCCONST char *buf, int len, int oType){
-  printf("%s",buf);
+  fprintf(stderr,"%s",buf);
 }
 
 
