@@ -44,6 +44,8 @@ int convert(long exp, ei_x_buff *result){
 	i++;
       }
     }    
+    if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"REALSXP") || ei_x_encode_long(result,exp)){
+    } 
   }else if(type == INTSXP){
     if(len > 0){
       vi = INTEGER(es);
@@ -53,12 +55,13 @@ int convert(long exp, ei_x_buff *result){
 	i++;
       }
     }
+    if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"INTSXP") || ei_x_encode_long(result,exp)){
+    } 
   }else{
-    
+    if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"OTHER") || ei_x_encode_atom(result,"OTHER")){
+    } 
   }
-
-  if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"REALSXP") || ei_x_encode_long(result,exp)){
-  } 
+  
 
   return 0;
 }
