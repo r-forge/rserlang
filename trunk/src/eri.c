@@ -57,11 +57,18 @@ int convert(long exp, ei_x_buff *result){
     }
     if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"INTSXP") || ei_x_encode_long(result,exp)){
     } 
+  }else if(type == VECSXP){
+    
+    if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"VECSXP") || ei_x_encode_long(result,exp)){
+    }
+  }else if(type == STRSXP){
+
+    if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"STRSXP") || ei_x_encode_long(result,exp)){
+    }
   }else{
-    if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"OTHER") || ei_x_encode_atom(result,"OTHER")){
+    if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"OTHER") || ei_x_encode_long(result,exp)){
     } 
-  }
-  
+  }  
 
   return 0;
 }
