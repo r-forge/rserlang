@@ -40,7 +40,7 @@ int convert(long exp, ei_x_buff *result){
       vd = REAL(es);
       i = 0;      
       while(i < len){
-	fprintf(stderr,"REAL:%f\n", *vd+i);
+	fprintf(stderr,"REAL:%f\n", *(vd+i));
 	i++;
       }
     }    
@@ -49,7 +49,7 @@ int convert(long exp, ei_x_buff *result){
       vi = INTEGER(es);
       i = 0;      
       while(i < len){	
-	fprintf(stderr,"INTEGER:%d\n", *vi+i);		
+	fprintf(stderr,"INTEGER:%d\n", *(vi+i));		
 	i++;
       }
     }
