@@ -37,26 +37,32 @@ int convert(long exp, ei_x_buff *result){
 
   if(type == REALSXP){    
     if(len > 0){   
+      if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"REALSXP") || 
+	 ei_x_encode_list_header(result,len)){
+      }
       vd = REAL(es);
       i = 0;      
       while(i < len){
-	fprintf(stderr,"REAL:%f\n", *(vd+i));
+	ei_x_encode_double(result,*(vd+i));	
 	i++;
       }
+      if(ei_x_encode_empty_list(result)){
+      }
     }    
-    if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"REALSXP") || ei_x_encode_long(result,exp)){
-    } 
-  }else if(type == INTSXP){
+  }else if(type == INTSXP){    
     if(len > 0){
+      if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"INTSXP") || 
+	 ei_x_encode_list_header(result,len)){
+      }
       vi = INTEGER(es);
       i = 0;      
       while(i < len){	
-	fprintf(stderr,"INTEGER:%d\n", *(vi+i));		
+	ei_x_encode_long(result,*(vi+i));
 	i++;
       }
-    }
-    if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"INTSXP") || ei_x_encode_long(result,exp)){
-    } 
+      if(ei_x_encode_empty_list(result)){
+      }
+    }   
   }else if(type == VECSXP){
     
     if(ei_x_encode_atom(result,"ok") || ei_x_encode_atom(result,"VECSXP") || ei_x_encode_long(result,exp)){
