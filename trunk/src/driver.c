@@ -5,6 +5,7 @@
 #include "Rengine.h"
 #include "Rinit.h"
 #include "eri.h"
+#include "rErlang.h"
 
 #define BUF_SIZE 128 
 
@@ -16,6 +17,11 @@ int write_cmd(ei_x_buff *buff);
 
 int sum(int x, int y){
   return x+y;
+}
+
+void debugcnode(){
+  printf("start cnode test\n");
+  rE_connect();
 }
 
 void debugloop(){
@@ -106,6 +112,8 @@ int main(int argc, char **argv ){
 
   if (argc==2 && !strcmp(argv[1],"-d")){
     debugloop();
+  }else if(argc==2 && !strcmp(argv[1],"-dc")){    
+    debugcnode();
   }else{
     mainloop();
   }  
