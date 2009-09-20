@@ -1,7 +1,7 @@
 -module(rErlang).
 
 % API
--export([test/0]).
+-export([test/1]).
 
-test()->
-    1+2.
+test(X)->
+   X*2.

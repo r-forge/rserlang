@@ -22,7 +22,8 @@ int sum(int x, int y){
 void debugcnode(){
   printf("start cnode test\n");
   rE_connect();
-  rE_test();
+  rE_test(2);
+  rE_test(6);
 }
 
 void debugloop(){

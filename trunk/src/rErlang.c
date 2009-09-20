@@ -2,6 +2,9 @@
 #include "ei.h"
 #include "rErlang.h"
 
+
+int fd;
+
 int rE_init(){  
   erl_init(NULL,0);  
   return 1;
@@ -21,10 +24,25 @@ int rE_connect(){
     erl_err_quit("ERROR: erl_connect failed");   
     return 0;
   }
+
+  fd = sockfd;
+
   return 1;
 }
 
-void rE_test(){
+void rE_test(int num){
+
+  ETERM *reply,*ep;
+
+  ep = erl_format("[~i]", num);
+  reply = erl_rpc(fd, "rErlang", "test", ep);
+  
+  printf("%d\n",ERL_INT_VALUE(reply));  
+    
+  erl_free_term(ep);
+  erl_free_term(reply);  
+
+  printf("test end\n");
 
 }
 

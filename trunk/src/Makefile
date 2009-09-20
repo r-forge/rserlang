@@ -3,7 +3,7 @@
 BINDIR :=../bin
 
 .erl.beam:
-	erlc -W -o${BINDIR} $<
+	erlc -W -o${BINDIR} eri.erl rErlang.erl
 
 CSRC=$(shell ls *.c)
 HED=$(shell ls *.h)
