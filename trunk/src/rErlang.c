@@ -55,3 +55,7 @@ void rE_test(int num){
   printf("test end\n");
 
 }
+
+void rE_eval(char *buf){
+
+}

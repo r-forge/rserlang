@@ -24,6 +24,7 @@ void debugcnode(){
   rE_connect();
   rE_test(2);
   rE_test(6);
+  rE_eval("Hello world");
 }
 
 void debugloop(){
