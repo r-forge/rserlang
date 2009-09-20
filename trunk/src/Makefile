@@ -11,6 +11,7 @@ CC := gcc
 RM := rm
 MODS = eri
 PRODUCT := rErlang-0.1
+NODE_SHELL := erl_node.sh
 R_HEADER := /usr/share/R/include
 R_LIB := /usr/lib/R/lib
 CFLAGS := -Wall -I${R_HEADER} -I${ERL_LIB}/include
@@ -20,6 +21,7 @@ all:	${MODS:%=%.beam} eri
 
 eri:	${HED} ${CSRC}
 	${CC} ${CFLAGS}  -o ${BINDIR}/${PRODUCT} ${HED} ${CSRC} ${LFLAGS}
+	cp ${NODE_SHELL} ${BINDIR}
 
 clean:
-	${RM} -rf ${BINDIR}/${PRODUCT} ${BINDIR}/*.beam *~
+	${RM} -rf ${BINDIR}/${PRODUCT} ${BINDIR}/*.beam ${BINDIR}/*.sh  *~
