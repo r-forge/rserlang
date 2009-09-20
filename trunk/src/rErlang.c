@@ -14,17 +14,30 @@ int rE_connect(){
   int identification_number = 99;
   int creation=1;  
   erl_connect_init(identification_number, COOKIE, creation);
-
-  int sockfd;
-  //  char *nodename="node01@localhost"; 
-  if ((sockfd = erl_connect(NODE_NAME)) < 0){
-    erl_err_quit("ERROR: erl_connect failed");   
+  
+  if ((fd = erl_connect(NODE_NAME)) >= 0){    
+    return 1;    
+  }else {
+    /* (failure) */
+    switch (fd) {
+    case ERL_NO_DAEMON:
+      erl_err_quit("<ERROR> No epmd running!");
+      break;
+    case ERL_CONNECT_FAIL:
+      erl_err_quit("<ERROR> Connect failed!");
+      break;
+    case ERL_NO_PORT:
+      erl_err_quit("<ERROR> Node is not running!");
+      break;
+    case ERL_TIMEOUT:
+      erl_err_quit("<ERROR> Connect timed out!");
+      break;
+    default:
+      erl_err_quit("<ERROR> Error during connect! (%d)",fd);
+      break;
+    }
     return 0;
-  }
-
-  fd = sockfd;
-
-  return 1;
+  }  
 }
 
 void rE_test(int num){
@@ -34,7 +47,7 @@ void rE_test(int num){
   ep = erl_format("[~i]", num);
   reply = erl_rpc(fd, "rErlang", "test", ep);
   
-  printf("%d\n",ERL_INT_VALUE(reply));  
+  erl_print_term(stdout,reply);
     
   erl_free_term(ep);
   erl_free_term(reply);  
@@ -42,4 +55,3 @@ void rE_test(int num){
   printf("test end\n");
 
 }
-

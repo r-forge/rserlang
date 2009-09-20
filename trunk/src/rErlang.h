@@ -9,3 +9,4 @@
 int fd;
 int rE_connect();
 void rE_test(int num);
+void rE_eval();
