@@ -23,3 +23,8 @@ int rE_connect(){
   }
   return 1;
 }
+
+void rE_test(){
+
+}
+

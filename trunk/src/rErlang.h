@@ -4,3 +4,4 @@
  */
 
 int rE_connect();
+void rE_test();
