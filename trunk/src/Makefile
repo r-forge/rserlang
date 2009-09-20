@@ -24,4 +24,4 @@ eri:	${HED} ${CSRC}
 	cp ${NODE_SHELL} ${BINDIR}
 
 clean:
-	${RM} -rf ${BINDIR}/${PRODUCT} ${BINDIR}/*.beam ${BINDIR}/*.sh  *~
+	${RM} -rf ${BINDIR}/${PRODUCT} ${BINDIR}/*.beam ${BINDIR}/*.sh  *~ *#
