@@ -2,21 +2,30 @@
 #include "ei.h"
 #include "rErlang.h"
 
+SEXP add(SEXP a, SEXP b){
+  int i, n;
+  n = length(a);
+  for(i=0; i < n; i++){
+    REAL(a)[i] += REAL(b)[i];
+  }
+  return (a);
+}
 
-int rE_init(){  
+int  rE_init(){  
   erl_init(NULL,0);  
   return 1;
 }
 
-int rE_connect(){  
-  rE_init();
+SEXP rE_connect(SEXP a){  
+  int init;
+  init =  rE_init();
 
   int identification_number = 99;
   int creation=1;  
   erl_connect_init(identification_number, COOKIE, creation);
   
   if ((fd = erl_connect(NODE_NAME)) >= 0){    
-    return 1;    
+    return a;    
   }else {
     /* (failure) */
     switch (fd) {
@@ -36,7 +45,7 @@ int rE_connect(){
       erl_err_quit("<ERROR> Error during connect! (%d)",fd);
       break;
     }
-    return 0;
+    return a;
   }  
 }
 
