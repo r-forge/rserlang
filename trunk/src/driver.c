@@ -24,7 +24,11 @@ void debugcnode(){
   rE_connect();
   rE_test(2);
   rE_test(6);
-  rE_eval("Hello world");
+  rE_eval("1+2.");
+  rE_eval("eri:start().");
+  rE_eval("eri:setup().");
+  rE_eval("eri:eval(\"rnorm(1)\").");
+
 }
 
 void debugloop(){

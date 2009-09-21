@@ -51,11 +51,17 @@ void rE_test(int num){
     
   erl_free_term(ep);
   erl_free_term(reply);  
-
-  printf("test end\n");
-
 }
 
 void rE_eval(char *buf){
+  ETERM *reply,*ep;
 
+  ep = erl_format("[~s]", buf);
+  reply = erl_rpc(fd, "rErlang", "eval", ep);
+  
+  erl_print_term(stdout,reply);
+    
+  erl_free_term(ep);
+  erl_free_term(reply);
+  
 }
