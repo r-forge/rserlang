@@ -6,7 +6,7 @@
 
 
 start()->
-    start("./rErlang-0.1").
+    start("./ERI-0.1").
 start(ExtPrg) ->
     spawn_link(?MODULE, init, [ExtPrg]).
 

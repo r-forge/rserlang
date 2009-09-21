@@ -10,7 +10,8 @@ HED=$(shell ls *.h)
 CC := gcc
 RM := rm
 MODS = eri
-PRODUCT := rErlang-0.1
+PRODUCT_ERI := ERI-0.1
+PRODUCT_RE := rErlang-0.1
 NODE_SHELL := erl_node.sh
 R_HEADER := /usr/share/R/include
 R_LIB := /usr/lib/R/lib
@@ -20,8 +21,10 @@ LFLAGS := -L${R_LIB} -L${ERL_LIB}/lib -lR -lerl_interface_st -lei_st -lerl_inter
 all:	${MODS:%=%.beam} eri
 
 eri:	${HED} ${CSRC}
-	${CC} ${CFLAGS}  -o ${BINDIR}/${PRODUCT} ${HED} ${CSRC} ${LFLAGS}
+	${CC} ${CFLAGS} -o ${BINDIR}/${PRODUCT_ERI} ${HED} ${CSRC} ${LFLAGS}
+	${CC} -std=gnu99 ${CFLAGS} -fpic  -g -O2 -c rErlang.c -o ${BINDIR}/${PRODUCT_RE}.o
+	${CC} -std=gnu99 -shared  -o ${BINDIR}/${PRODUCT_RE}.so ${BINDIR}/${PRODUCT_RE}.o ${LFLAGS}
 	cp ${NODE_SHELL} ${BINDIR}
 
 clean:
-	${RM} -rf ${BINDIR}/${PRODUCT} ${BINDIR}/*.beam ${BINDIR}/*.sh  *~ *#
+	${RM} -rf ${BINDIR}/${PRODUCT_ERI} ${BINDIR}/${PRODUCT_RE} ${BINDIR}/*.beam ${BINDIR}/*.sh ${BINDIR}/*.o ${BINDIR}/*.so *~ *# *.o *.so
