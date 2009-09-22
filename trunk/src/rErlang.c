@@ -1,5 +1,3 @@
-#include "erl_interface.h"
-#include "ei.h"
 #include "rErlang.h"
 
 SEXP add(SEXP a, SEXP b){
@@ -49,28 +47,59 @@ SEXP rE_connect(SEXP a){
   }  
 }
 
-void rE_test(int num){
+SEXP rE_test(int num){
 
   ETERM *reply,*ep;
+  SEXP result;
 
   ep = erl_format("[~i]", num);
   reply = erl_rpc(fd, "rErlang", "test", ep);
   
-  erl_print_term(stdout,reply);
+  //erl_print_term(stdout,reply);
+  result = ETERM2SEXP(reply);
     
   erl_free_term(ep);
   erl_free_term(reply);  
+
+  return result;
 }
 
-void rE_eval(char *buf){
-  ETERM *reply,*ep;
+SEXP rE_eval(SEXP str){
 
-  ep = erl_format("[~s]", buf);
-  reply = erl_rpc(fd, "rErlang", "eval", ep);
+  ETERM *reply,*ep;
+  SEXP result;
+  int type, i;  
   
-  erl_print_term(stdout,reply);
+  type = TYPEOF(str);
+  unsigned int len = LENGTH(str);
+  if(type == STRSXP){    
+    char *buf;
+    buf = CHAR(STRING_ELT(str,0));   
+    ep = erl_format("[~s]", buf);
+    reply = erl_rpc(fd, "rErlang", "eval", ep);
+    //erl_print_term(stdout,reply);
+    result = ETERM2SEXP(reply);  
+    
+  }else{
+    result = NULL;
+  }  
     
   erl_free_term(ep);
   erl_free_term(reply);
+
+  return result;
   
+}
+
+SEXP ETERM2SEXP(ETERM *eterm){
+
+  int i;
+  SEXP result;
+  
+  PROTECT(result = allocVector(STRSXP, 4));
+  for (i = 0; i < 4; i++) {
+    SET_STRING_ELT(result, i, mkChar("hello"));
+  }
+  UNPROTECT(1);  
+  return result;  
 }

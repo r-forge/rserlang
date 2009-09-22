@@ -13,5 +13,5 @@ connect <- function(){
 }
 
 eval <- function(expr){
-     1+1   
+     .Call("rE_eval",expr)
 }
