@@ -54,8 +54,7 @@ SEXP rE_test(int num){
 
   ep = erl_format("[~i]", num);
   reply = erl_rpc(fd, "rErlang", "test", ep);
-  
-  //erl_print_term(stdout,reply);
+
   result = ETERM2SEXP(reply);
     
   erl_free_term(ep);
@@ -75,9 +74,10 @@ SEXP rE_eval(SEXP str){
   if(type == STRSXP){    
     char *buf;
     buf = CHAR(STRING_ELT(str,0));   
+    fprintf(stderr,"%s\n",buf);
     ep = erl_format("[~s]", buf);
     reply = erl_rpc(fd, "rErlang", "eval", ep);
-    //erl_print_term(stdout,reply);
+    
     result = ETERM2SEXP(reply);  
     
   }else{
