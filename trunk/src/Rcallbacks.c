@@ -9,7 +9,7 @@ int Re_ReadConsole(RCCONST char *prompt, unsigned char *buf, int len, int addtoh
 }
 
 void Re_ShowMessage(RCCONST char *buf){
-  printf("Re_ShowMessage\n");
+  fprintf(stderr,"%s",buf); 
 }
 
 void Re_WriteConsoleEx(RCCONST char *buf, int len, int oType){
