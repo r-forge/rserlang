@@ -2,7 +2,7 @@
 
 % API
 -export([start/0, start/1, stop/0,init/1]).
--export([setup/0, parse/1, eval/1, sum/2]).
+-export([connect/0, parse/1, eval/1, sum/2]).
 
 
 start()->
@@ -13,7 +13,7 @@ start(ExtPrg) ->
 stop() ->
     ?MODULE ! stop.
 
-setup() -> 
+connect() -> 
     call_port({setup}).
 
 parse(X)->
