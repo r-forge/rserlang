@@ -65,41 +65,43 @@ SEXP rE_test(int num){
 
 SEXP rE_eval(SEXP str){
 
-  ETERM *reply,*ep;
+  
   SEXP result;
-  int type, i;  
+  int type;  
   
   type = TYPEOF(str);
-  unsigned int len = LENGTH(str);
+  
   if(type == STRSXP){    
     char *buf;
-    buf = CHAR(STRING_ELT(str,0));   
-    fprintf(stderr,"%s\n",buf);
+    ETERM *reply,*ep;
+    buf = CHAR(STRING_ELT(str,0));       
     ep = erl_format("[~s]", buf);
     reply = erl_rpc(fd, "rErlang", "eval", ep);
     
-    result = ETERM2SEXP(reply);  
-    
-  }else{
+    result = ETERM2SEXP(reply);
+    erl_free_term(ep);
+    erl_free_term(reply);    
+  }else{    
     result = NULL;
-  }  
-    
-  erl_free_term(ep);
-  erl_free_term(reply);
-
-  return result;
-  
+  }
+  return result;  
 }
 
 SEXP ETERM2SEXP(ETERM *eterm){
 
   int i;
   SEXP result;
-  
-  PROTECT(result = allocVector(STRSXP, 4));
-  for (i = 0; i < 4; i++) {
-    SET_STRING_ELT(result, i, mkChar("hello"));
+
+  if(ERL_IS_TUPLE(eterm)){
+    int size = ERL_TUPLE_SIZE(eterm);    
   }
-  UNPROTECT(1);  
+
+  erl_print_term(stderr,eterm);
+
+  
+  PROTECT(result = allocVector(STRSXP, 1));
+  SET_STRING_ELT(result, 0, mkChar("ok"));
+  UNPROTECT(1);
+
   return result;  
 }
