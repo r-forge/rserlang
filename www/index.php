@@ -54,5 +54,11 @@ And also we want to ensure that rErlang is robust in the event that the external
 <h2>Features of rErlang</h2>
 <p>Coming Soon !</p>
 <p>This project is just getting started. <a href="http://r-forge.r-project.org/project/request.php?group_id=499">Please join us!</a></p>
+
+<h2>Binding rules of data types between Erlang and R</h2>
+<p>Coming Soon !</p>
+
+<h2>Tutorial</h2>
+<h3>R -> Erlang</h3>
 </body>
 </html>
