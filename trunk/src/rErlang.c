@@ -87,9 +87,8 @@ SEXP rE_eval(SEXP str){
   return result;  
 }
 
-SEXP ETERM2SEXP(ETERM *eterm){
-
-  int i;
+SEXP bind_eterm(ETERM *eterm){
+  
   SEXP result;
 
   if(ERL_IS_TUPLE(eterm)){

@@ -9,8 +9,10 @@
 #define COOKIE "rerlang"
 #define NODE_NAME "node01@localhost"
 
+#define ETERM2SEXP(a) bind_eterm(a);
+
 int fd;
 SEXP rE_connect();
 SEXP rE_test(int num);
 SEXP rE_eval(SEXP str);
-SEXP ETERM2SEXP(ETERM *eterm);
+SEXP bind_eterm(ETERM *eterm);
