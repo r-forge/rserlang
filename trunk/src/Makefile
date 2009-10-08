@@ -14,10 +14,8 @@ PRODUCT_ERI := ERI-0.1
 PRODUCT_RE := rErlang-0.1
 NODE_SHELL := erl_node.sh
 R_FILE := rErlang.R
-R_HEADER := /usr/share/R/include
-R_LIB := /usr/lib/R/lib
-CFLAGS := -Wall -I${R_HEADER} -I${ERL_LIB}/include
-LFLAGS := -L${R_LIB} -L${ERL_LIB}/lib -lR -lerl_interface_st -lei_st -lerl_interface -lei
+CFLAGS := -Wall -I${R_INCLUDE_DIR} -I${ERI_LIB}/include
+LFLAGS := -L${R_HOME}/lib -L${ERI_LIB}/lib -lR -lerl_interface_st -lei_st -lerl_interface -lei
 
 all:	${MODS:%=%.beam} eri
 
