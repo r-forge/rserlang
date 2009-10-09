@@ -1,5 +1,6 @@
 #include "eri.h"
 #include "Rinit.h"
+#include "Rdecl.h"
 #include <R_ext/Parse.h>
 
 
