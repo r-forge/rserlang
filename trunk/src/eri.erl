@@ -11,7 +11,16 @@ start(ExtPrg) ->
     spawn_link(?MODULE, init, [ExtPrg]).
 
 stop() ->
-    ?MODULE ! stop.
+    case call_port({stop}) of 
+	{ok} ->
+	    io:fwrite("terminate R session\n"),
+	    ?MODULE ! stop;
+	{error} -> 
+	    io:fwrite("fail terminate R session\n"),
+	    ?MODULE ! stop;
+	_ ->
+	    ?MODULE ! stop
+    end.
 
 connect() -> 
     call_port({setup}).

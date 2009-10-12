@@ -15,3 +15,4 @@ int setup();
 long parse(const char *s);
 long erl_eval(long exp);
 int convert(long exp, ei_x_buff *result);
+int terminate();

@@ -9,6 +9,10 @@ int setup(){
   return res;
 }
 
+int terminate(){
+  return 1;
+}
+
 long parse(const char *s){ 
   return r_parse(s);
 }

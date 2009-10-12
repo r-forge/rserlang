@@ -63,7 +63,7 @@ int mainloop(){
   char command[MAXATOMLEN];
   char exp[MAXATOMLEN];
   long pstr;
-  int resi,index, version, arity;
+  int resi, index, version, arity;
   int x,y;  
   long resl;  
   ei_x_buff result;
@@ -76,9 +76,7 @@ int mainloop(){
     index = 0;
     if (ei_decode_version(buf, &index, &version)) return 1;
     if (ei_decode_tuple_header(buf, &index, &arity)) return 2;    
-    if (ei_decode_atom(buf, &index, command)) return 4;
-      
-    
+    if (ei_decode_atom(buf, &index, command)) return 4;    
 
     if(strncmp(command, "eval", 3)==0){      
       if(ei_x_new_with_version(&result) || ei_x_encode_tuple_header(&result,3)){
@@ -105,6 +103,15 @@ int mainloop(){
 	resl = parse(exp);
 	if(ei_x_encode_atom(&result,"ok") || ei_x_encode_long(&result,resl)){
 	}     
+      }else if(strncmp(command,"stop", 3)==0){
+	resi = terminate();
+	if(resi){
+	  if(ei_x_encode_atom(&result,"ok")){
+	  }
+	}else{
+	  if(ei_x_encode_atom(&result,"error")){
+	  }
+	}
       }
     }
    
