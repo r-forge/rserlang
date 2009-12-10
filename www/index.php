@@ -84,6 +84,72 @@ Eshell V5.6.3  (abort with ^G)
 <h3>R -> Erlang</h3>
 <table border=0 width=100%><tr><td>
 <table bgcolor=black width=100% border=1 cellspacing=0><tr><td><font color=white><pre>
+
+user@home:~/rerlang/trunk/bin$ R
+R version 2.9.2 (2009-08-24)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+REvolution R enhancements not installed.  For improved
+performance and other extensions: apt-get install revolution-r
+
+> source("rErlang.R")
+> connect()
+[1] 0
+> eval("1+1")
+{badrpc,{'EXIT',{{badmatch,{error,{1,erl_parse,["syntax error before: ",[]]}}},[{rErlang,eval,1},{rpc,'-handle_call/3-fun-0-',5}]}}}[1] "ok"
+> eval("1+1.")
+2[1] "ok"
+> eval("eri:start().")
+<node01@localhost.48.0>[1] "ok"
+> eval("eri:connect()")
+{badrpc,{'EXIT',{{badmatch,{error,{1,erl_parse,["syntax error before: ",[]]}}},[{rErlang,eval,1},{rpc,'-handle_call/3-fun-0-',5}]}}}[1] "ok"
+> eval("eri:connect().")
+{ok,0}[1] "ok"
+> eval("eri:eval(\"1:9\").")
+{ok,'INTSXP',[1,2,3,4,5,6,7,8,9]}[1] "ok"
+> eval("eri:eval(\"1:9\").")
+ 以下にエラー eval("eri:eval(\"1:9\").") : ignoring SIGPIPE signal
+> 
+> q()
+Save workspace image? [y/n/c]: n
+keisuke@avalon:~/rerlang/trunk/bin$ R
+R version 2.9.2 (2009-08-24)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+REvolution R enhancements not installed.  For improved
+performance and other extensions: apt-get install revolution-r
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </pre></font></td></tr></table>
 
 </body>
